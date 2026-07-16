@@ -9,9 +9,11 @@ import { Person } from '../types';
 interface PersonCardProps {
   key?: string;
   person: Person;
+  people: Person[];
   onUpdate: (id: string, updates: Partial<Person>) => void;
   onDelete: (id: string) => void;
   onAddRelation: (id: string, relationType: 'father' | 'mother' | 'spouse' | 'son' | 'daughter' | 'sibling') => void;
+  onLinkChild: (parentId: string, childId: string) => void;
   onMoveLeft: (id: string) => void;
   onMoveRight: (id: string) => void;
   isFirstInRow: boolean;
@@ -99,9 +101,11 @@ const PALETTES: Array<'slate' | 'blue' | 'rose' | 'amber' | 'emerald' | 'indigo'
 
 export default function PersonCard({
   person,
+  people,
   onUpdate,
   onDelete,
   onAddRelation,
+  onLinkChild,
   onMoveLeft,
   onMoveRight,
   isFirstInRow,
@@ -354,6 +358,22 @@ export default function PersonCard({
                 >
                   <span>👧</span> <span>Add Daughter</span>
                 </button>
+                
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 py-1 mt-1 border-t border-slate-100">Link Existing Child</span>
+                {people
+                  .filter((p) => p.id !== person.id && !person.children.includes(p.id))
+                  .map((p) => (
+                    <button
+                      key={p.id}
+                      onClick={() => {
+                        onLinkChild(person.id, p.id);
+                        setShowAddMenu(false);
+                      }}
+                      className="w-full text-left px-3 py-1.5 hover:bg-emerald-50 text-emerald-900 rounded-md transition-colors font-medium flex items-center space-x-1.5"
+                    >
+                      <span>🔗</span> <span>{p.name || 'Unnamed'}</span>
+                    </button>
+                  ))}
               </div>
             )}
           </div>

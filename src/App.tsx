@@ -265,6 +265,20 @@ export default function App() {
     updatePeople([...people, newPerson]);
   };
 
+  // Link existing person as a child
+  const handleLinkChild = (parentId: string, childId: string) => {
+    const updatedPeople = people.map((p) => {
+      if (p.id === parentId) {
+        return { ...p, children: [...new Set([...p.children, childId])] };
+      }
+      if (p.id === childId) {
+        return { ...p, parents: [...new Set([...p.parents, parentId])] };
+      }
+      return p;
+    });
+    updatePeople(updatedPeople);
+  };
+
   // Reorder person cards horizontally within their generation
   const handleMoveHorizontal = (id: string, direction: 'left' | 'right') => {
     const target = people.find((p) => p.id === id);
@@ -470,6 +484,7 @@ export default function App() {
             onUpdatePerson={handleUpdatePerson}
             onDeletePerson={handleDeletePerson}
             onAddRelation={handleAddRelation}
+            onLinkChild={handleLinkChild}
             onAddUnconnectedToRow={handleAddUnconnectedToRow}
             onMoveLeft={(id) => handleMoveHorizontal(id, 'left')}
             onMoveRight={(id) => handleMoveHorizontal(id, 'right')}

@@ -9,6 +9,7 @@ interface FamilyTreeCanvasProps {
   onUpdatePerson: (id: string, updates: Partial<Person>) => void;
   onDeletePerson: (id: string) => void;
   onAddRelation: (id: string, relationType: 'father' | 'mother' | 'spouse' | 'son' | 'daughter' | 'sibling') => void;
+  onLinkChild: (parentId: string, childId: string) => void;
   onAddUnconnectedToRow: (generation: number) => void;
   onMoveLeft: (id: string) => void;
   onMoveRight: (id: string) => void;
@@ -23,6 +24,7 @@ export default function FamilyTreeCanvas({
   onUpdatePerson,
   onDeletePerson,
   onAddRelation,
+  onLinkChild,
   onAddUnconnectedToRow,
   onMoveLeft,
   onMoveRight,
@@ -274,9 +276,11 @@ export default function FamilyTreeCanvas({
                         <PersonCard
                           key={person.id}
                           person={person}
+                          people={people}
                           onUpdate={onUpdatePerson}
                           onDelete={onDeletePerson}
                           onAddRelation={onAddRelation}
+                          onLinkChild={onLinkChild}
                           onMoveLeft={onMoveLeft}
                           onMoveRight={onMoveRight}
                           isFirstInRow={index === 0}
