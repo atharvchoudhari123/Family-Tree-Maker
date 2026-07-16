@@ -7,4 +7,4 @@
    `npm start`
 
    optional. run the dev server:
-               `np run dev`
+               `npm run dev`
