@@ -1,0 +1,6 @@
+{
+  "name": "Family Tree Designer & PDF Exporter",
+  "description": "An interactive tool to design your family tree, manage generational rows, customize layouts, and export high-resolution custom PDFs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
